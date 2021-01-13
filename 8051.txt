@@ -1,0 +1,212 @@
+Bài 1:nháy lên khi nhấn nút p3.2
+Cách 1:
+#include <sfr51.inc>
+org 00h
+ljmp kien
+org 40h
+kien:
+lcall delay
+lcall delay
+jb p3.2,nhan1
+ljmp kt
+nhan1:
+mov p1,#11111110b
+lcall delay
+lcall delay
+jb p3.2,nhan2
+ljmp kt
+nhan2:
+mov p1,#11111101b
+lcall delay
+lcall delay
+jb p3.2,nhan3
+sjmp kt
+nhan3:
+mov p1,#11111011b
+lcall delay
+lcall delay
+jb p3.2,nhan4
+sjmp kt
+nhan4:
+mov p1,#11110111b
+lcall delay
+lcall delay
+jb p3.2,nhan5
+sjmp kt
+nhan5:
+mov p1,#11101111b
+lcall delay
+lcall delay
+jb p3.2,nhan6
+sjmp kt
+nhan6:
+mov p1,#1101111b
+lcall delay
+lcall delay
+jb p3.2,nhan7
+sjmp kt
+nhan7:
+mov p1,#10111111b
+lcall delay
+lcall delay
+jb p3.2,nhan8
+sjmp kt
+nhan8:
+mov p1,#01111111b
+sjmp kt
+delay:
+mov r1,#10
+loop1:
+mov r2,#100
+loop2:
+mov r3,#100
+loop3:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+djnz r3,loop3
+djnz r2,loop2
+djnz r1,loop1
+ret
+kt:
+mov p1,#00h
+end
+Cách 2:-------------------------------------------------------------
+#include <sfr51.inc>
+org 00h
+ljmp kien
+org 40h
+kien:
+mov a,#11111110b
+lap:
+lcall delay
+jnb p3.2,kien1
+sjmp kt
+kien1:
+mov p1,a
+lcall delay
+rl a
+sjmp lap
+delay:
+mov r1,#10
+loop1:
+mov r2,#100
+loop2:
+mov r3,#100
+loop3:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+djnz r3,loop3
+djnz r2,loop2
+djnz r1,loop1
+ret
+kt:
+mov p1,#00h
+end
+
+Bài 2:nháy từ 1 đến 8 nhấn 3.2 nháy lại từ 8 đến 1-------------------------
+#include <sfr51.inc>
+org 00h
+ljmp kien
+org 40h
+kien:
+mov a,#11111110b
+lcall delay
+jnb p3.2,lap
+sjmp kt
+lap:
+mov p1,a
+lcall delay
+rl a
+cjne a,#11111110b,lap
+rr a
+jnb p3.2,lap1
+sjmp kt
+lap1:
+mov p1,a
+lcall delay
+rr a
+cjne a,#01111111b,lap1
+rl a
+jnb p3.2,lap
+sjmp kt
+delay:
+mov r1,#10
+loop1:
+mov r2,#100
+loop2:
+mov r3,#100
+loop3:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+djnz r3,loop3
+djnz r2,loop2
+djnz r1,loop1
+ret
+kt:
+mov p1,#00h
+end
+Bài 3: chạy từ 1 đến 8 nhấn p3.2 là đảo 8 đến 1
+#include <sfr51.inc>
+org 00h
+ljmp kien
+org 40h
+kien:
+mov a,#11111110b
+lap21:
+mov p1,#00h
+lcall delay
+lap:
+mov p1,a
+lcall delay
+rl a
+jnb p3.2,lap11
+sjmp lap
+lap11:
+mov p1,#00h
+lcall delay
+lap1:
+mov p1,a
+lcall delay
+jnb p3.2,lap21
+rr a
+sjmp lap1
+delay:
+mov r1,#10
+loop1:
+mov r2,#100
+loop2:
+mov r3,#100
+loop3:
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+djnz r3,loop3
+djnz r2,loop2
+djnz r1,loop1
+ret
+kt:
+mov p1,#00h
+end

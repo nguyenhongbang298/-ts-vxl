@@ -1,0 +1,186 @@
+;bai 1
+.model small
+.stack 100h
+.data 
+cach db ' $' 
+.code
+ten proc  
+    mov ax,@data
+    mov ds,ax
+    mov ah,1
+    int 21h 
+    mov bl,al
+    la:
+    mov ah,2
+    mov dl,bl
+    int 21h
+    mov ah,9
+    lea dx,cach
+    int 21h
+    inc bl
+    cmp bl,122
+    jna la
+    ten endp
+end ten
+;bai 2
+.model small
+.stack 100h
+.data 
+cach db ' $' 
+.code
+ten proc  
+    mov ax,@data
+    mov ds,ax
+    mov ah,1
+    int 21h
+    sub al,32 
+    mov bl,al
+    la:
+    mov ah,2
+    mov dl,bl
+    int 21h
+    mov ah,9
+    lea dx,cach
+    int 21h
+    sub bl,1
+    cmp bl,65
+    jnb la
+    ten endp
+end ten
+;bai 3
+.model small
+.stack 100h
+.data 
+cach db ' $' 
+.code
+ten proc  
+    mov ax,@data
+    mov ds,ax
+    mov bl,122
+    la: 
+    mov ah,8h
+    int 21h 
+    cmp al,27
+    je thoat
+    mov ah,2
+    mov dl,bl
+    int 21h
+    mov ah,9
+    lea dx,cach
+    int 21h 
+    sub bl,1 
+    cmp bl,97
+    jnb la 
+    thoat:
+    mov ah,4ch
+    int 21h
+    ten endp
+end ten
+;bai 4
+.model small
+.stack 100h
+.data  
+tb1 db 'nhap so dong: $'
+tb2 db 10,13,'nhap so cot: $'
+tb3 db 'HELLO WORLD!$' 
+.code
+ten proc 
+    mov ax,@data
+    mov ds,ax
+    mov ah,9h
+    lea dx,tb1
+    int 21h
+    mov ah,1h
+    int 21h
+    sub al,48
+    mov ch,al
+    mov ah,9h
+    lea dx,tb2
+    int 21h
+    mov ah,1h
+    int 21h
+    sub al,48
+    mov cl,al
+    mov ah,2h
+    mov dx,cx
+    int 10h
+    mov ah,9h
+    lea dx,tb3
+    int 21h
+    ten endp
+end ten
+;bai 5
+.model small
+.stack 100h
+.data  
+tb1 db 'nhap ky tu: $' 
+tb2 db 10,13, 'gia tri thap phan cua ky tu tren la: $'
+.code
+ten proc 
+    mov ax,@data
+    mov ds,ax
+    mov ah,9h
+    lea dx,tb1
+    int 21h
+    mov ah,1h
+    int 21h 
+    mov cx,10h 
+    div cl
+    mov bx,ax 
+    cmp bl,10h
+    jae so
+    add bl,37h 
+    jmp nhay
+    so:
+    add bl,20h 
+    nhay:
+    cmp bh,9h
+    jna so1
+    add bh,37h 
+    jmp nhay1
+    so1:
+    add bh,30h 
+    nhay1:
+    mov ah,9h
+    lea dx,tb2
+    int 21h
+    mov ah,2
+    mov dl,bl
+    int 21h  
+    mov ah,2
+    mov dl,bh
+    int 21h
+    ten endp
+end ten
+;bai 6
+.model small
+.stack 100h
+.data  
+tb1 db 'nhap so: $' 
+tb2 db 10,13, 'so vua nhap la so le $'  
+tb3 db 10,13, 'so vua nhap la so chan $'
+.code
+ten proc 
+    mov ax,@data
+    mov ds,ax
+    mov ah,9h
+    lea dx,tb1
+    int 21h
+    mov ah,1h
+    int 21h 
+    sub al,30h
+    mov cx,02h 
+    div cl
+    cmp ah,0
+    je chan
+    mov ah,9h
+    lea dx,tb2
+    int 21h 
+    mov ah,4ch
+    int 21h
+    chan:
+    mov ah,9h
+    lea dx,tb3
+    int 21h
+    ten endp
+end ten
